@@ -1,0 +1,13 @@
+.anime-card {
+  max-width: 200px;
+}
+.anime-card > .anime-card-cover,
+.anime-card > .anime-card-title {
+  width: 100%;
+}
+.anime-card > .anime-card-title {
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
