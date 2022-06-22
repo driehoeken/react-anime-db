@@ -1,0 +1,6 @@
+.anime-list {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}

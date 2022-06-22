@@ -1,4 +1,8 @@
 body {
-  background-color: #161616;
-  color: #ffffff;
+    background-color: #161616;
+    color: #ffffff;
+}
+.container {
+    width: 1500px;
+    margin: auto;
 }
