@@ -2,19 +2,60 @@
     min-width: 230px;
     max-width: 230px;
     margin: 0 5px 0 5px;
+    cursor: pointer;
+    position: relative;
+    animation: hover-data-appear 0.1s forwards;
 }
-.anime-card-cover,
-.anime-card-title {
-    width: 100%;
+.anime-card:hover .anime-card-cover {
+    transform: scale(1.1);
 }
+.anime-card:hover .anime-card-title {
+    font-weight: bold;
+}
+.anime-card:hover .anime-card-hover-data {
+    animation: hover-data-appear 0.1s forwards;
+    visibility: visible;
+}
+
 .anime-card-title {
     -webkit-line-clamp: 2;
     overflow: hidden;
     -webkit-box-orient: vertical;
     display: -webkit-box;
+    width: 100%;
+    height: 42px;
 }
 .anime-card-cover {
     width: 230px;
     height: 300px;
     object-fit: cover;
+    transition: all 0.1s;
+    display: block;
+    border-radius: 5px;
+}
+.anime-card-cover-wrapper {
+    overflow: hidden;
+}
+.anime-card-hover-data {
+    width: 200px;
+    height: 150px;
+    background-color: #ffffff;
+    position: absolute;
+    margin: auto;
+    bottom: 235px;
+    left: calc(130px - 50%);
+    top: 280px;
+    visibility: hidden;
+    border-radius: 5px;
+}
+@keyframes hover-data-appear {
+    0% {
+        visibility: visible;
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
