@@ -1,5 +1,6 @@
 .anime-card {
     min-width: 230px;
+    max-width: 230px;
     margin: 0 5px 0 5px;
 }
 .anime-card-cover,

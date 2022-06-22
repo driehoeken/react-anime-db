@@ -2,57 +2,50 @@ import logo from "./logo.svg";
 import "./App.css";
 import AnimeCard from "./components/AnimeCard/AnimeCard";
 import AnimeList from "./components/AnimeList/AnimeList";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { type } from "@testing-library/user-event/dist/type";
 
 const App = () => {
-    const [trendingAnimes, setTrendingAnimes] = useState({
-        data: {
-            Page: {
-                media: [
-                    {
-                        title: {
-                            romaji: "Tomodachi Game",
-                        },
-                        coverImage: {
-                            large: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx141014-eRFDPNpf3hI7.jpg",
-                        },
-                    },
-                    {
-                        title: {
-                            romaji: "ONE PIECE",
-                        },
-                        coverImage: {
-                            large: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/nx21-tXMN3Y20PIL9.jpg",
-                        },
-                    },
-                    {
-                        title: {
-                            romaji: "Yuusha, Yamemasu",
-                        },
-                        coverImage: {
-                            large: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140457-sIgseoInp02B.jpg",
-                        },
-                    },
-                    {
-                        title: {
-                            romaji: "SPY×FAMILY",
-                        },
-                        coverImage: {
-                            large: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx140960-Yl5M3AiLZAMq.png",
-                        },
-                    },
-                    {
-                        title: {
-                            romaji: "Sono Bisque Doll wa Koi wo Suru",
-                        },
-                        coverImage: {
-                            large: "https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/bx101583-LsEOUNrjOpez.jpg",
-                        },
-                    },
-                ],
+    const [trendingAnimes, setTrendingAnimes] = useState([]);
+
+    const updateAnimeCardsList = async (page, perPage, sort, setCallback) => {
+        const query = `{
+        Page(page:${page}, perPage: ${perPage}){
+          media(sort: ${sort}){
+            title {
+              romaji
+            }
+            coverImage {
+              large
+            }
+          }
+        }
+      }`;
+        const url = "https://graphql.anilist.co";
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
             },
-        },
-    });
+            body: JSON.stringify({
+                query: query,
+            }),
+        };
+
+        const response = await fetch(url, options);
+        const responseJson = await response.json();
+
+        const outcome = responseJson.data.Page.media;
+        //console.log(typeof responseJson.data.Page.media);
+        //return responseJson.data.Page.media;
+        //setTrendingAnimes(outcome);
+        setCallback(outcome);
+    };
+    useEffect(() => {
+        updateAnimeCardsList(1, 5, "TRENDING_DESC", setTrendingAnimes);
+    }, []);
 
     return (
         <React.Fragment>
