@@ -4,7 +4,7 @@
     margin: 0 5px 0 5px;
     cursor: pointer;
     position: relative;
-    animation: hover-data-appear 0.1s forwards;
+    animation: appear-anim 0.1s forwards;
 }
 .anime-card:hover .anime-card-cover {
     transform: scale(1.1);
@@ -13,7 +13,7 @@
     font-weight: bold;
 }
 .anime-card:hover .anime-card-hover-data {
-    animation: hover-data-appear 0.1s forwards;
+    animation: appear-anim 0.1s forwards;
     visibility: visible;
 }
 
@@ -48,7 +48,7 @@
     visibility: hidden;
     border-radius: 5px;
 }
-@keyframes hover-data-appear {
+@keyframes appear-anim {
     0% {
         visibility: visible;
         opacity: 0.5;

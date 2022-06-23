@@ -7,11 +7,12 @@ import { type } from "@testing-library/user-event/dist/type";
 
 const App = () => {
     const [trendingAnimes, setTrendingAnimes] = useState([]);
+    const [popularThisSeasonAnimes, setPopularThisSeasonAnimes] = useState([]);
 
-    const updateAnimeCardsList = async (page, perPage, sort, setCallback) => {
+    const updateAnimeCardsList = async (page, perPage, args, setCallback) => {
         const query = `{
         Page(page:${page}, perPage: ${perPage}){
-          media(sort: ${sort}){
+          media(${args}){
             title {
               romaji
             }
@@ -43,15 +44,51 @@ const App = () => {
         //setTrendingAnimes(outcome);
         setCallback(outcome);
     };
+
+    const getYearSeason = () => {
+        const date = new Date();
+
+        const month = date.getMonth();
+
+        let season = "";
+        if (month == 12 || month <= 2) {
+            season = "WINTER";
+        } else if (month >= 3 || month <= 5) {
+            season = "SPRING";
+        } else if (month >= 6 || month <= 8) {
+            season = "SUMMER";
+        } else {
+            season = "FALL";
+        }
+
+        return { year: date.getFullYear(), season: season };
+    };
+
     useEffect(() => {
-        updateAnimeCardsList(1, 5, "TRENDING_DESC", setTrendingAnimes);
+        const currYearSeason = getYearSeason();
+
+        updateAnimeCardsList(1, 5, "sort:TRENDING_DESC", setTrendingAnimes);
+        updateAnimeCardsList(
+            1,
+            5,
+            `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
+            setPopularThisSeasonAnimes
+        );
     }, []);
 
     return (
         <React.Fragment>
             <div className="container">
                 <h2>Trending Anime</h2>
-                <AnimeList animes={trendingAnimes}></AnimeList>
+                <AnimeList
+                    listClass="trending-list"
+                    animes={trendingAnimes}
+                ></AnimeList>
+                <h2>Popular This Season Anime</h2>
+                <AnimeList
+                    listClass="popular-this-season-list"
+                    animes={popularThisSeasonAnimes}
+                ></AnimeList>
             </div>
         </React.Fragment>
     );
