@@ -8,6 +8,7 @@ import { type } from "@testing-library/user-event/dist/type";
 const App = () => {
     const [trendingAnimes, setTrendingAnimes] = useState([]);
     const [popularThisSeasonAnimes, setPopularThisSeasonAnimes] = useState([]);
+    const [popularAllTimeAnimes, setpopularAllTimeAnimes] = useState([]);
 
     const updateAnimeCardsList = async (page, perPage, args, setCallback) => {
         const query = `{
@@ -74,6 +75,12 @@ const App = () => {
             `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
             setPopularThisSeasonAnimes
         );
+        updateAnimeCardsList(
+            1,
+            5,
+            "sort: POPULARITY_DESC",
+            setpopularAllTimeAnimes
+        );
     }, []);
 
     return (
@@ -88,6 +95,11 @@ const App = () => {
                 <AnimeList
                     listClass="popular-this-season-list"
                     animes={popularThisSeasonAnimes}
+                ></AnimeList>
+                <h2>Popular All Time Anime</h2>
+                <AnimeList
+                    listClass="popular-this-season-list"
+                    animes={popularAllTimeAnimes}
                 ></AnimeList>
             </div>
         </React.Fragment>
