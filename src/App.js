@@ -13,12 +13,27 @@ const App = () => {
     const updateAnimeCardsList = async (page, perPage, args, setCallback) => {
         const query = `{
         Page(page:${page}, perPage: ${perPage}){
-          media(${args}){
+          media(${args}, type: ANIME){
             title {
-              romaji
+                romaji
             }
             coverImage {
               large
+            }
+            genres
+            episodes
+            nextAiringEpisode {
+                timeUntilAiring
+            }
+            seasonYear
+            season
+            format
+            status
+            startDate {
+                year
+            }
+            endDate{
+                year
             }
           }
         }
@@ -75,32 +90,18 @@ const App = () => {
             `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
             setPopularThisSeasonAnimes
         );
-        updateAnimeCardsList(
-            1,
-            5,
-            "sort: POPULARITY_DESC",
-            setpopularAllTimeAnimes
-        );
+        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC", setpopularAllTimeAnimes);
     }, []);
 
     return (
         <React.Fragment>
             <div className="container">
                 <h2>Trending Anime</h2>
-                <AnimeList
-                    listClass="trending-list"
-                    animes={trendingAnimes}
-                ></AnimeList>
+                <AnimeList listClass="trending-list" animes={trendingAnimes} />
                 <h2>Popular This Season Anime</h2>
-                <AnimeList
-                    listClass="popular-this-season-list"
-                    animes={popularThisSeasonAnimes}
-                ></AnimeList>
+                <AnimeList listClass="popular-this-season-list" animes={popularThisSeasonAnimes} />
                 <h2>Popular All Time Anime</h2>
-                <AnimeList
-                    listClass="popular-this-season-list"
-                    animes={popularAllTimeAnimes}
-                ></AnimeList>
+                <AnimeList listClass="popular-this-season-list" animes={popularAllTimeAnimes} />
             </div>
         </React.Fragment>
     );
