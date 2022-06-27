@@ -98,9 +98,9 @@ const setEpisodes = (animeData) => {
     if (episodes !== null) {
         //plural etc
         if (episodes !== 1) {
-            return `${episodes} episodes`;
+            return `- ${episodes} episodes`;
         } else if (episodes === 1 && format !== "MOVIE") {
-            return `1 episode`;
+            return `- 1 episode`;
             //if the format is movie it will show how long is movie
         } else {
             const duration = animeData.duration;
@@ -141,8 +141,7 @@ const AnimeCard = (props) => {
             <div className="anime-card-hover-data">
                 <p className="anime-card-hover-date">{setDate(animeData)}</p>
                 <p className="anime-card-hover-format-episodes">
-                    {animeData.format !== "MOVIE" ? animeData.format : ""} -{" "}
-                    {setEpisodes(animeData)}
+                    {animeData.format !== "MOVIE" ? animeData.format : ""} {setEpisodes(animeData)}
                 </p>
                 <div className="anime-card-hover-genres">
                     {animeData.genres.map((genre) => {
