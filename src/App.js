@@ -56,13 +56,12 @@ const App = () => {
         const response = await fetch(url, options);
         const responseJson = await response.json();
 
+        //setting data through callback
         const outcome = responseJson.data.Page.media;
-        //console.log(typeof responseJson.data.Page.media);
-        //return responseJson.data.Page.media;
-        //setTrendingAnimes(outcome);
         setCallback(outcome);
     };
 
+    //getting current year and season
     const getYearSeason = () => {
         const date = new Date();
 
@@ -85,6 +84,7 @@ const App = () => {
     useEffect(() => {
         const currYearSeason = getYearSeason();
 
+        //setting cards list in home page
         updateAnimeCardsList(1, 5, "sort:TRENDING_DESC", setTrendingAnimes);
         updateAnimeCardsList(
             1,
@@ -92,7 +92,7 @@ const App = () => {
             `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
             setPopularThisSeasonAnimes
         );
-        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC, format: MOVIE", setpopularAllTimeAnimes);
+        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC", setpopularAllTimeAnimes);
     }, []);
 
     return (

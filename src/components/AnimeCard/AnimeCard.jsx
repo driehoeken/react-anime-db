@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./AnimeCard.css";
 import { Link } from "react-router-dom";
 
+//setting date on hover
 const setDate = (animeData) => {
     const status = animeData.status;
     const endYear = animeData.endDate.year;
@@ -15,6 +16,7 @@ const setDate = (animeData) => {
     let daysToNextEp;
     let hoursToNextEp;
 
+    //if next airing episode exists, it will set some additional data
     if (nextEp !== null) {
         episodeNo = nextEp.episode;
         timeToNextEp = nextEp.timeUntilAiring;
@@ -23,14 +25,21 @@ const setDate = (animeData) => {
     }
 
     if (status === "FINISHED") {
+        //if anime was being released for 2 years or more it will be sth like '2016 - 2019'
         if (endYear - startYear >= 2) {
             return `${startYear} - ${endYear}`;
-        } else {
+        }
+        //otherwise year and season
+        else {
             return `${seasonYear} ${season}`;
         }
-    } else if (status === "RELEASING") {
+    }
+    //if anime is being released it will show time to the next ep
+    else if (status === "RELEASING") {
         return setEpAiringMessage(daysToNextEp, hoursToNextEp, episodeNo);
-    } else if (status === "NOT_YET_RELEASED") {
+    }
+    //it will show the most accurate time we know the anime will be released
+    else if (status === "NOT_YET_RELEASED") {
         if (nextEp !== null) {
             return setEpAiringMessage(daysToNextEp, hoursToNextEp, episodeNo);
         } else if (animeData.season !== null) {
@@ -40,7 +49,9 @@ const setDate = (animeData) => {
         } else {
             return `TBA`;
         }
-    } else if (status === "CANCELLED") {
+    }
+    //again the most accurate data about time we know
+    else if (status === "CANCELLED") {
         if (animeData.season !== null) {
             return `${seasonYear} ${season}`;
         } else if (startYear !== null) {
@@ -51,12 +62,16 @@ const setDate = (animeData) => {
     }
 
     function setEpAiringMessage(days, hours, ep) {
+        //just things with plural etc
+
         let outcome = `${ep} episode in `;
         if (days === 1) {
             outcome += `${days} day `;
         } else if (days > 1) {
             outcome += `${days} days `;
         }
+
+        //if both hours and minutes are not zero it will add and in order for better readability
 
         if (days !== 0 && hours !== 0) {
             outcome += "and ";
@@ -68,6 +83,7 @@ const setDate = (animeData) => {
             outcome += `${hours} hours`;
         }
 
+        //if days and hours are 0 it means that next ep will be released in less than hour
         if (days === 0 && hours === 0) {
             outcome = `${ep} episode in less than hour!`;
         }
@@ -75,14 +91,17 @@ const setDate = (animeData) => {
     }
 };
 
+//setting episodes on hover
 const setEpisodes = (animeData) => {
     const episodes = animeData.episodes;
     const format = animeData.format;
     if (episodes !== null) {
+        //plural etc
         if (episodes !== 1) {
             return `${episodes} episodes`;
         } else if (episodes === 1 && format !== "MOVIE") {
             return `1 episode`;
+            //if the format is movie it will show how long is movie
         } else {
             const duration = animeData.duration;
             const hours = Math.floor(duration / 60);
