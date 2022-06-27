@@ -76,18 +76,19 @@ const setDate = (animeData) => {
 };
 
 const AnimeCard = (props) => {
+    const animeData = props.animeData;
     return (
         <div className="anime-card">
             <div className="anime-card-cover-wrapper">
                 <img
                     className="anime-card-cover"
-                    src={props.animeData.coverImage.large}
-                    alt={props.animeData.title.romaji}
+                    src={animeData.coverImage.large}
+                    alt={animeData.title.romaji}
                 />
             </div>
-            <p className="anime-card-title">{props.animeData.title.romaji}</p>
+            <p className="anime-card-title">{animeData.title.romaji}</p>
             <div className="anime-card-hover-data">
-                <p className="anime-card-hover-date">{setDate(props.animeData)}</p>
+                <p className="anime-card-hover-date">{setDate(animeData)}</p>
                 <p className="anime-card-hover-episodes">{/*props.animeData.episodes*/}</p>
                 <div className="anime-card-hover-genres"></div>
             </div>
