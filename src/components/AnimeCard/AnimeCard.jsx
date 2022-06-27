@@ -143,7 +143,11 @@ const AnimeCard = (props) => {
                 <p className="anime-card-hover-format-episodes">
                     {animeData.format !== "MOVIE" ? animeData.status : ""} {setEpisodes(animeData)}
                 </p>
-                <div className="anime-card-hover-genres"></div>
+                <div className="anime-card-hover-genres">
+                    {animeData.genres.map((genre) => {
+                        return `${genre} `;
+                    })}
+                </div>
             </div>
         </div>
     );
