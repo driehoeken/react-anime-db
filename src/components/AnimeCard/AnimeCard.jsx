@@ -75,6 +75,38 @@ const setDate = (animeData) => {
     }
 };
 
+const setEpisodes = (animeData) => {
+    const episodes = animeData.episodes;
+    const format = animeData.format;
+    if (episodes !== null) {
+        if (episodes !== 1) {
+            return `${episodes} episodes`;
+        } else if (episodes === 1 && format !== "MOVIE") {
+            return `1 episode`;
+        } else {
+            const duration = animeData.duration;
+            const hours = Math.floor(duration / 60);
+            const minutes = duration - hours * 60;
+            let outcome = "";
+
+            if (hours === 1) {
+                outcome += `1 hour`;
+            } else if (hours > 1) {
+                outcome += `${hours} hours`;
+            }
+
+            if (minutes === 1) {
+                outcome += `, 1 minute`;
+            } else if (minutes > 1) {
+                outcome += `, ${minutes} minutes`;
+            }
+            return outcome;
+        }
+    } else {
+        return "";
+    }
+};
+
 const AnimeCard = (props) => {
     const animeData = props.animeData;
     return (
@@ -89,7 +121,9 @@ const AnimeCard = (props) => {
             <p className="anime-card-title">{animeData.title.romaji}</p>
             <div className="anime-card-hover-data">
                 <p className="anime-card-hover-date">{setDate(animeData)}</p>
-                <p className="anime-card-hover-episodes">{/*props.animeData.episodes*/}</p>
+                <p className="anime-card-hover-format-episodes">
+                    {animeData.format !== "MOVIE" ? animeData.status : ""} {setEpisodes(animeData)}
+                </p>
                 <div className="anime-card-hover-genres"></div>
             </div>
         </div>

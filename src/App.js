@@ -36,6 +36,7 @@ const App = () => {
             endDate{
                 year
             }
+            duration
           }
         }
       }`;
@@ -91,7 +92,7 @@ const App = () => {
             `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
             setPopularThisSeasonAnimes
         );
-        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC", setpopularAllTimeAnimes);
+        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC, format: MOVIE", setpopularAllTimeAnimes);
     }, []);
 
     return (
