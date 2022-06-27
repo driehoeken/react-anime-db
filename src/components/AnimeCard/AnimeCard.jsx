@@ -141,11 +141,12 @@ const AnimeCard = (props) => {
             <div className="anime-card-hover-data">
                 <p className="anime-card-hover-date">{setDate(animeData)}</p>
                 <p className="anime-card-hover-format-episodes">
-                    {animeData.format !== "MOVIE" ? animeData.status : ""} {setEpisodes(animeData)}
+                    {animeData.format !== "MOVIE" ? animeData.format : ""} -{" "}
+                    {setEpisodes(animeData)}
                 </p>
                 <div className="anime-card-hover-genres">
                     {animeData.genres.map((genre) => {
-                        return `${genre} `;
+                        return <span className="anime-card-hover-genre">{genre}</span>;
                     })}
                 </div>
             </div>

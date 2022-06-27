@@ -37,7 +37,7 @@
 }
 .anime-card-hover-data {
     width: 200px;
-    height: 150px;
+    height: fit-content;
     background-color: #ffffff;
     position: absolute;
     margin: auto;
@@ -47,6 +47,25 @@
     visibility: hidden;
     border-radius: 5px;
     color: #000000;
+    padding: 10px;
+}
+.anime-card-hover-date {
+    font-weight: bold;
+    font-size: 17px;
+}
+.anime-card-hover-data p {
+    margin: 0;
+}
+.anime-card-hover-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+.anime-card-hover-genre {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 2px;
+    border-radius: 10px;
 }
 @keyframes appear-anim {
     0% {
