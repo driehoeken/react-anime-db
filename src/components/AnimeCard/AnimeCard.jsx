@@ -8,8 +8,19 @@ const setDate = (animeData) => {
     const startYear = animeData.startDate.year;
     const seasonYear = animeData.seasonYear;
     const season = animeData.season;
-    const timeToNextEp = animeData.nextAiringEpisode.timeUntilAiring;
-    const nextEp = animeData.nextAiringEpisode.episode;
+    const nextEp = animeData.nextAiringEpisode;
+
+    let episodeNo;
+    let timeToNextEp;
+    let daysToNextEp;
+    let hoursToNextEp;
+
+    if (nextEp !== null) {
+        episodeNo = nextEp.episode;
+        timeToNextEp = nextEp.timeUntilAiring;
+        daysToNextEp = Math.floor(timeToNextEp / 86400);
+        hoursToNextEp = Math.floor((timeToNextEp - daysToNextEp * 86400) / 3600);
+    }
 
     if (status === "FINISHED") {
         if (endYear - startYear >= 2) {
@@ -18,31 +29,49 @@ const setDate = (animeData) => {
             return `${seasonYear} ${season}`;
         }
     } else if (status === "RELEASING") {
-        const daysToNextEp = Math.floor(timeToNextEp / 86400);
-        const hoursToNextEp = Math.floor((timeToNextEp - daysToNextEp * 86400) / 3600);
-        let outcome = `${nextEp} episode in `;
-        if (daysToNextEp === 1) {
-            outcome += `${daysToNextEp} day `;
-        } else if (daysToNextEp > 1) {
-            outcome += `${daysToNextEp} days `;
+        return setEpAiringMessage(daysToNextEp, hoursToNextEp, episodeNo);
+    } else if (status === "NOT_YET_RELEASED") {
+        if (nextEp !== null) {
+            return setEpAiringMessage(daysToNextEp, hoursToNextEp, episodeNo);
+        } else if (animeData.season !== null) {
+            return `${seasonYear} ${season}`;
+        } else if (startYear !== null) {
+            return `${startYear}`;
+        } else {
+            return `TBA`;
+        }
+    } else if (status === "CANCELLED") {
+        if (animeData.season !== null) {
+            return `${seasonYear} ${season}`;
+        } else if (startYear !== null) {
+            return `${startYear}`;
+        } else {
+            return `Cancelled`;
+        }
+    }
+
+    function setEpAiringMessage(days, hours, ep) {
+        let outcome = `${ep} episode in `;
+        if (days === 1) {
+            outcome += `${days} day `;
+        } else if (days > 1) {
+            outcome += `${days} days `;
         }
 
-        if (daysToNextEp !== 0 && hoursToNextEp !== 0) {
+        if (days !== 0 && hours !== 0) {
             outcome += "and ";
         }
 
-        if (hoursToNextEp === 1) {
-            outcome += `${hoursToNextEp} hour`;
-        } else if (hoursToNextEp > 1) {
-            outcome += `${hoursToNextEp} hours`;
+        if (hours === 1) {
+            outcome += `${hours} hour`;
+        } else if (hours > 1) {
+            outcome += `${hours} hours`;
         }
 
-        if (daysToNextEp === 0 && hoursToNextEp === 0) {
-            outcome = `${nextEp} episode in less than hour!`;
+        if (days === 0 && hours === 0) {
+            outcome = `${ep} episode in less than hour!`;
         }
         return outcome;
-    } else if (status === "NOT_YET_RELEASED") {
-    } else if (status === "CANCELLED") {
     }
 };
 
@@ -58,10 +87,8 @@ const AnimeCard = (props) => {
             </div>
             <p className="anime-card-title">{props.animeData.title.romaji}</p>
             <div className="anime-card-hover-data">
-                <p className="anime-card-hover-date">
-                    {props.animeData.seasonYear} {props.animeData.season}
-                </p>
-                <p className="anime-card-hover-episodes">{props.animeData.episodes}</p>
+                <p className="anime-card-hover-date">{setDate(props.animeData)}</p>
+                <p className="anime-card-hover-episodes">{/*props.animeData.episodes*/}</p>
                 <div className="anime-card-hover-genres"></div>
             </div>
         </div>

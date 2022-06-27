@@ -24,6 +24,7 @@ const App = () => {
             episodes
             nextAiringEpisode {
                 timeUntilAiring
+                episode
             }
             seasonYear
             season
