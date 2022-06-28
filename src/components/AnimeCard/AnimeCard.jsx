@@ -131,24 +131,35 @@ const AnimeCard = (props) => {
     return (
         <div className="anime-card">
             <div className="anime-card-cover-wrapper">
-                <img
-                    className="anime-card-cover"
-                    src={animeData.coverImage.large}
-                    alt={animeData.title.romaji}
-                />
+                <Link to={`/anime/${animeData.id}`}>
+                    <img
+                        className="anime-card-cover"
+                        src={animeData.coverImage.large}
+                        alt={animeData.title.romaji}
+                    />
+                </Link>
             </div>
-            <p className="anime-card-title">{animeData.title.romaji}</p>
-            <div className="anime-card-hover-data">
-                <p className="anime-card-hover-date">{setDate(animeData)}</p>
-                <p className="anime-card-hover-format-episodes">
-                    {animeData.format !== "MOVIE" ? animeData.format : ""} {setEpisodes(animeData)}
-                </p>
-                <div className="anime-card-hover-genres">
-                    {animeData.genres.map((genre) => {
-                        return <span className="anime-card-hover-genre">{genre}</span>;
-                    })}
+            <p className="anime-card-title">
+                <Link to={`/anime/${animeData.id}`}>{animeData.title.romaji}</Link>
+            </p>
+            <Link to={`/anime/${animeData.id}`}>
+                <div className="anime-card-hover-data">
+                    <p className="anime-card-hover-date">{setDate(animeData)}</p>
+                    <p className="anime-card-hover-format-episodes">
+                        {animeData.format !== "MOVIE" ? animeData.format : ""}{" "}
+                        {setEpisodes(animeData)}
+                    </p>
+                    <div className="anime-card-hover-genres">
+                        {animeData.genres.map((genre, index) => {
+                            return (
+                                <span className="anime-card-hover-genre" key={index}>
+                                    {genre}
+                                </span>
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 };
