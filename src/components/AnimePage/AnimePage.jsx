@@ -142,7 +142,7 @@ const AnimePage = () => {
                     {renderBanner()}
                     <div className="main-section">
                         <img src={animeData.coverImage.large} className="anime-cover" />
-                        <p>{animeData.title.romaji}</p>
+                        <p className="anime-main-title">{animeData.title.romaji}</p>
                     </div>
                 </React.Fragment>
             );
