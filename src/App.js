@@ -1,7 +1,7 @@
 import "./App.css";
-import React, { Component } from "react";
+import React from "react";
 import Home from "./components/Home/Home";
-import { BrowserRouter as Router, Routers, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AnimePage from "./components/AnimePage/AnimePage";
 
 const App = () => {

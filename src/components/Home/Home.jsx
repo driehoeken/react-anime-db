@@ -2,64 +2,14 @@ import React, { Component, useEffect, useState } from "react";
 import AnimeList from "../AnimeList/AnimeList";
 
 const Home = () => {
-    const [trendingAnimes, setTrendingAnimes] = useState([]);
-    const [popularThisSeasonAnimes, setPopularThisSeasonAnimes] = useState([]);
-    const [popularAllTimeAnimes, setpopularAllTimeAnimes] = useState([]);
+    //getting current year and season
+    const getCurrYear = () => {
+        const date = new Date();
 
-    const updateAnimeCardsList = async (page, perPage, args, setCallback) => {
-        const query = `{
-        Page(page:${page}, perPage: ${perPage}){
-          media(${args}, type: ANIME){
-            id
-            title {
-                romaji
-            }
-            coverImage {
-              large
-            }
-            genres
-            episodes
-            nextAiringEpisode {
-                timeUntilAiring
-                episode
-            }
-            seasonYear
-            season
-            format
-            status
-            startDate {
-                year
-            }
-            endDate{
-                year
-            }
-            duration
-          }
-        }
-      }`;
-        const url = "https://graphql.anilist.co";
-
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify({
-                query: query,
-            }),
-        };
-
-        const response = await fetch(url, options);
-        const responseJson = await response.json();
-
-        //setting data with callback
-        const outcome = responseJson.data.Page.media;
-        setCallback(outcome);
+        return date.getFullYear();
     };
 
-    //getting current year and season
-    const getYearSeason = () => {
+    const getCurrSeason = () => {
         const date = new Date();
 
         const month = date.getMonth();
@@ -75,31 +25,27 @@ const Home = () => {
             season = "FALL";
         }
 
-        return { year: date.getFullYear(), season: season };
+        return season;
     };
-
-    useEffect(() => {
-        const currYearSeason = getYearSeason();
-
-        //setting cards list in home page
-        updateAnimeCardsList(1, 5, "sort:TRENDING_DESC", setTrendingAnimes);
-        updateAnimeCardsList(
-            1,
-            5,
-            `sort: POPULARITY_DESC, season: ${currYearSeason.season}, seasonYear: ${currYearSeason.year}`,
-            setPopularThisSeasonAnimes
-        );
-        updateAnimeCardsList(1, 5, "sort: POPULARITY_DESC", setpopularAllTimeAnimes);
-    }, []);
 
     return (
         <React.Fragment>
             <h2>Trending Anime</h2>
-            <AnimeList listClass="trending-list" animes={trendingAnimes} />
+            <AnimeList listClass="trending-list" page={1} perPage={5} args={"sort:TRENDING_DESC"} />
             <h2>Popular This Season Anime</h2>
-            <AnimeList listClass="popular-this-season-list" animes={popularThisSeasonAnimes} />
+            <AnimeList
+                listClass="popular-this-season-list"
+                page={1}
+                perPage={5}
+                args={`sort: POPULARITY_DESC, season: ${getCurrSeason()}, seasonYear: ${getCurrYear()}`}
+            />
             <h2>Popular All Time Anime</h2>
-            <AnimeList listClass="popular-all-time-list" animes={popularAllTimeAnimes} />
+            <AnimeList
+                listClass="popular-all-time-list"
+                page={1}
+                perPage={5}
+                args={"sort: POPULARITY_DESC"}
+            />
         </React.Fragment>
     );
 };

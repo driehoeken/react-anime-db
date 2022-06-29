@@ -32,8 +32,8 @@ const AnimePage = () => {
         const responseJson = await response.json();
 
         const outcome = responseJson.data.Media;
-        setLoading(false);
         setAnimeData(outcome);
+        setLoading(false);
     };
 
     useEffect(() => {
