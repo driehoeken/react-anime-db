@@ -56,7 +56,7 @@ const AnimeList = (props) => {
         //setting data with callback
         const outcome = responseJson.data.Page.media;
         setAnimes(outcome);
-        //setLoading(false);
+        setLoading(false);
     };
 
     useEffect(() => {

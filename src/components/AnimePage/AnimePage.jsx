@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./AnimePage.css";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -9,9 +10,96 @@ const AnimePage = () => {
     const updateAnimeData = async () => {
         const query = `{
             Media(id: ${id}){
-                title{
+                title {
                     romaji
-                }
+                    english
+                    native
+                  }
+                  type
+                      format
+                  status
+                  description
+                  startDate {
+                    year
+                    month
+                    day
+                  }
+                  endDate {
+                    year
+                    month
+                    day
+                  }
+                  season
+                  seasonYear
+                  episodes
+                  duration
+                  trailer {
+                    site
+                    id
+                  }
+                  coverImage {
+                    extraLarge
+                    large
+                    medium
+                    color
+                  }
+                  bannerImage
+                  genres
+                  averageScore
+                  tags {
+                    id
+                    name
+                    isAdult
+                    isMediaSpoiler
+                    rank
+                    category
+                  }
+                  relations {
+                    edges {
+                      id
+                      relationType
+                    }
+                    nodes{
+                      id
+                      title {
+                        romaji
+                        english
+                        native
+                        userPreferred
+                      }
+                    }
+                  }
+                  chapters
+                  staff {
+                    edges {
+                      id
+                    }
+                  }
+                  studios {
+                    edges {
+                      id
+                    }
+                  }
+                  isAdult
+                  nextAiringEpisode {
+                    id
+                  }
+                  externalLinks {
+                    id
+                  }
+                  streamingEpisodes {
+                    title
+                    thumbnail
+                    url
+                    site
+                  }
+                  recommendations {
+                    edges {
+                      node {
+                        id
+                      }
+                    }
+                  }
             }
         }`;
 
@@ -39,7 +127,31 @@ const AnimePage = () => {
     useEffect(() => {
         updateAnimeData();
     }, []);
-    return <div>{loading ? "loading..." : animeData.title.romaji}</div>;
+
+    const renderBanner = () => {
+        if (animeData.bannerImage) {
+            console.log("xd");
+            return <img className="anime-banner" src={animeData.bannerImage} />;
+        }
+    };
+
+    const renderAnimePage = () => {
+        if (!loading) {
+            return (
+                <React.Fragment>
+                    {renderBanner()}
+                    <div className="main-section">
+                        <img src={animeData.coverImage.large} className="anime-cover" />
+                        <p>{animeData.title.romaji}</p>
+                    </div>
+                </React.Fragment>
+            );
+        } else {
+            return <p>loading...</p>;
+        }
+    };
+
+    return <React.Fragment>{renderAnimePage()}</React.Fragment>;
 };
 
 export default AnimePage;

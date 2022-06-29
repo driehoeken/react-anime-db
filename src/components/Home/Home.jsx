@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React from "react";
 import AnimeList from "../AnimeList/AnimeList";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
         const month = date.getMonth();
 
         let season = "";
-        if (month == 12 || month <= 2) {
+        if (month === 12 || month <= 2) {
             season = "WINTER";
         } else if (month >= 3 || month <= 5) {
             season = "SPRING";
