@@ -53,7 +53,7 @@ const Home = () => {
         const response = await fetch(url, options);
         const responseJson = await response.json();
 
-        //setting data through callback
+        //setting data with callback
         const outcome = responseJson.data.Page.media;
         setCallback(outcome);
     };

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import AnimeCard from "../AnimeCard/AnimeCard";
 import "./AnimeList.css";
 
