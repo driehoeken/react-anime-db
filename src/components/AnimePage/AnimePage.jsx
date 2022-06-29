@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./AnimePage.css";
+import parse from "html-react-parser";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -130,7 +131,6 @@ const AnimePage = () => {
 
     const renderBanner = () => {
         if (animeData.bannerImage) {
-            console.log("xd");
             return <img className="anime-banner" src={animeData.bannerImage} />;
         }
     };
@@ -142,7 +142,19 @@ const AnimePage = () => {
                     {renderBanner()}
                     <div className="main-section">
                         <img src={animeData.coverImage.large} className="anime-cover" />
-                        <p className="anime-main-title">{animeData.title.romaji}</p>
+                        <div className="anime-main-title-desc-wrapper">
+                            <p className="anime-main-title">{animeData.title.romaji}</p>
+                            <div className="anime-main-genres">
+                                {animeData.genres.map((genre, index) => {
+                                    return (
+                                        <a className="anime-genre" key={index}>
+                                            {genre}
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                            <p className="anime-main-desc">{parse(animeData.description)}</p>
+                        </div>
                     </div>
                 </React.Fragment>
             );

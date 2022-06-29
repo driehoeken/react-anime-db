@@ -15,5 +15,28 @@
     gap: 20px;
 }
 .anime-main-title {
-    margin-top: 0;
+    margin: 0 0 5px 0;
+}
+.anime-main-desc {
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    margin: 5px 0 0 0;
+}
+.desc-hidden {
+    -webkit-line-clamp: 12;
+}
+.anime-main-genres {
+    display: flex;
+
+    gap: 10px;
+}
+.anime-genre {
+    padding: 4px 6px 4px 6px;
+    border: #ffffff 2px solid;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.anime-genre:hover {
+    background-color: #3d3d3d;
 }
