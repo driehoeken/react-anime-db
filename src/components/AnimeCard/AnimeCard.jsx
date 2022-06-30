@@ -1,6 +1,7 @@
 import React from "react";
 import "./AnimeCard.css";
 import { Link } from "react-router-dom";
+import { formatAnimeFormat } from "../../misc";
 
 //setting date on hover
 const setDate = (animeData) => {
@@ -146,7 +147,7 @@ const AnimeCard = (props) => {
                 <div className="anime-card-hover-data">
                     <p className="anime-card-hover-date">{setDate(animeData)}</p>
                     <p className="anime-card-hover-format-episodes">
-                        {animeData.format !== "MOVIE" ? animeData.format : ""}{" "}
+                        {animeData.format !== "MOVIE" ? formatAnimeFormat(animeData.format) : ""}{" "}
                         {setEpisodes(animeData)}
                     </p>
                     <div className="anime-card-hover-genres">

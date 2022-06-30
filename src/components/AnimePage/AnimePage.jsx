@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./AnimePage.css";
 import parse from "html-react-parser";
+import { capitalizeFirst, formatAnimeFormat } from "../../misc";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -135,6 +136,23 @@ const AnimePage = () => {
         }
     };
 
+    const renderUnderTitle = () => {
+        let outcome = [formatAnimeFormat(animeData.format)];
+
+        const startYear = animeData.startDate.year;
+        const endYear = animeData.endDate.year;
+
+        if (endYear - startYear >= 2) {
+            outcome.push(`${startYear} - ${endYear}`);
+        } else {
+            outcome.push(`${capitalizeFirst(animeData.season)} ${animeData.seasonYear}`);
+        }
+
+        return outcome.map((info, index) => {
+            return <li key={index}>{info}</li>;
+        });
+    };
+
     const renderAnimePage = () => {
         if (!loading) {
             return (
@@ -142,8 +160,9 @@ const AnimePage = () => {
                     {renderBanner()}
                     <div className="main-section">
                         <img src={animeData.coverImage.large} className="anime-cover" />
-                        <div className="anime-main-title-desc-wrapper">
-                            <p className="anime-main-title">{animeData.title.romaji}</p>
+                        <div className="anime-main-right">
+                            <h1 className="anime-main-title">{animeData.title.romaji}</h1>
+                            <ul className="anime-under-title">{renderUnderTitle()}</ul>
                             <div className="anime-main-genres">
                                 {animeData.genres.map((genre, index) => {
                                     return (

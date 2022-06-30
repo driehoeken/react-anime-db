@@ -63,15 +63,15 @@ const AnimeList = (props) => {
         updateAnimeCardsList(props.page, props.perPage, props.args);
     }, []);
 
-    const loadingState = () => {
-        return <div>loading...</div>;
+    const loadingState = (index) => {
+        return <div key={index}>loading...</div>;
     };
 
     const renderList = () => {
         if (loading) {
             let outcome = [];
             for (let i = 0; i < props.perPage; i++) {
-                outcome.push(loadingState());
+                outcome.push(loadingState(i));
             }
             return outcome;
         } else {
