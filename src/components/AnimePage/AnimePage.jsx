@@ -204,10 +204,28 @@ const AnimePage = () => {
                 info: "Episode duration: ",
                 value: minsToHoursAndMins(animeData.duration),
             },
-
+            {
+                info: "Average Score: ",
+                value:
+                    (animeData.averageScore / 10) % 1 === 0
+                        ? `${animeData.averageScore / 10}.0`
+                        : animeData.averageScore / 10,
+            },
             {
                 info: "Premiered: ",
                 value: `${capitalizeOnlyFirst(animeData.season)} ${animeData.seasonYear}`,
+            },
+            {
+                info: "Start date: ",
+                value: animeData.startDate.year
+                    ? `${animeData.startDate.day}.${animeData.startDate.month}.${animeData.startDate.year}`
+                    : null,
+            },
+            {
+                info: "End date: ",
+                value: animeData.endDate.year
+                    ? `${animeData.endDate.day}.${animeData.endDate.month}.${animeData.endDate.year}`
+                    : null,
             },
         ];
 
