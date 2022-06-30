@@ -6,13 +6,14 @@ export const formatAnimeFormat = (format) => {
     } else if (format === "TV_SHORT") {
         return "TV Short";
     } else {
-        let result = format;
-        result = result.toLowerCase();
-        result = result[0].toUpperCase() + result.slice(1);
-        return result;
+        return capitalizeOnlyFirst(format);
     }
 };
-export const capitalizeFirst = (string) => {
+export const formatAnimeStatus = (status) => {
+    let result = status.replace("_", " ");
+    return capitalizeOnlyFirst(result);
+};
+export const capitalizeOnlyFirst = (string) => {
     let result = string;
     result = result.toLowerCase();
     result = result[0].toUpperCase() + result.slice(1);

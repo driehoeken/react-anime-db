@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./AnimePage.css";
 import parse from "html-react-parser";
-import { capitalizeFirst, formatAnimeFormat } from "../../misc";
+import { capitalizeOnlyFirst, formatAnimeFormat, formatAnimeStatus } from "../../misc";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -16,92 +16,91 @@ const AnimePage = () => {
                     romaji
                     english
                     native
-                  }
-                  type
-                      format
-                  status
-                  description
-                  startDate {
-                    year
-                    month
-                    day
-                  }
-                  endDate {
-                    year
-                    month
-                    day
-                  }
-                  season
-                  seasonYear
-                  episodes
-                  duration
-                  trailer {
-                    site
-                    id
-                  }
-                  coverImage {
-                    extraLarge
-                    large
-                    medium
-                    color
-                  }
-                  bannerImage
-                  genres
-                  averageScore
-                  tags {
-                    id
-                    name
-                    isAdult
-                    isMediaSpoiler
-                    rank
-                    category
-                  }
-                  relations {
-                    edges {
-                      id
-                      relationType
-                    }
-                    nodes{
-                      id
-                      title {
-                        romaji
-                        english
-                        native
-                        userPreferred
-                      }
-                    }
-                  }
-                  chapters
-                  staff {
-                    edges {
-                      id
-                    }
-                  }
-                  studios {
-                    edges {
-                      id
-                    }
-                  }
-                  isAdult
-                  nextAiringEpisode {
-                    id
-                  }
-                  externalLinks {
-                    id
-                  }
-                  streamingEpisodes {
-                    title
-                    thumbnail
-                    url
-                    site
-                  }
-                  recommendations {
-                    edges {
-                      node {
-                        id
-                      }
-                    }
-                  }
+                }
+                  	format
+                  	status
+                  	description
+                  	startDate {
+                  	  year
+                  	  month
+                  	  day
+                  	}
+                  	endDate {
+                  	  year
+                  	  month
+                  	  day
+                  	}
+                  	season
+                  	seasonYear
+                  	episodes
+                  	duration
+                  	trailer {
+                  	  site
+                  	  id
+                  	}
+                  	coverImage {
+                  	  extraLarge
+                  	  large
+                  	  medium
+                  	  color
+                  	}
+                  	bannerImage
+                  	genres
+                  	averageScore
+                  	tags {
+                  	  id
+                  	  name
+                  	  isAdult
+                  	  isMediaSpoiler
+                  	  rank
+                  	  category
+                  	}
+                  	relations {
+                  	  edges {
+                  	    id
+                  	    relationType
+                  	  }
+                  	  nodes{
+                  	    id
+                  	    title {
+                  	      romaji
+                  	      english
+                  	      native
+                  	      userPreferred
+                  	    }
+                  	  }
+                  	}
+                  	chapters
+                  	staff {
+                  	  edges {
+                  	    id
+                  	  }
+                  	}
+                  	studios {
+                  	  edges {
+                  	    id
+                  	  }
+                  	}
+                  	isAdult
+                  	nextAiringEpisode {
+                  	  id
+                  	}
+                  	externalLinks {
+                  	  id
+                  	}
+                  	streamingEpisodes {
+                  	  title
+                  	  thumbnail
+                  	  url
+                  	  site
+                  	}
+                  	recommendations {
+                  	  edges {
+                  	    node {
+                  	      id
+                  	    }
+                  	  }
+                  	}
             }
         }`;
 
@@ -145,8 +144,20 @@ const AnimePage = () => {
         if (endYear - startYear >= 2) {
             outcome.push(`${startYear} - ${endYear}`);
         } else {
-            outcome.push(`${capitalizeFirst(animeData.season)} ${animeData.seasonYear}`);
+            outcome.push(`${capitalizeOnlyFirst(animeData.season)} ${animeData.seasonYear}`);
         }
+
+        const episodes = animeData.episodes;
+
+        if (episodes) {
+            if (episodes === 1) {
+                outcome.push(`1 episode`);
+            } else {
+                outcome.push(`${episodes} episodes`);
+            }
+        }
+
+        outcome.push(formatAnimeStatus(animeData.status));
 
         return outcome.map((info, index) => {
             return <li key={index}>{info}</li>;
@@ -159,7 +170,10 @@ const AnimePage = () => {
                 <React.Fragment>
                     {renderBanner()}
                     <div className="main-section">
-                        <img src={animeData.coverImage.large} className="anime-cover" />
+                        <div className="anime-main-left">
+                            <img src={animeData.coverImage.large} className="anime-cover" />
+                            {}
+                        </div>
                         <div className="anime-main-right">
                             <h1 className="anime-main-title">{animeData.title.romaji}</h1>
                             <ul className="anime-under-title">{renderUnderTitle()}</ul>
