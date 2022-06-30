@@ -20,13 +20,7 @@
     margin: 0 0 5px 0;
 }
 .anime-main-desc {
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
     margin: 5px 0 0 0;
-}
-.desc-hidden {
-    -webkit-line-clamp: 12;
 }
 .anime-main-genres {
     display: flex;
