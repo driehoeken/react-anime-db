@@ -81,7 +81,7 @@
 .anime-card-hover-genre {
     background-color: #333333;
     color: #ffffff;
-    padding: 2px;
+    padding: 2px 4px 2px 4px;
     border-radius: 10px;
 }
 @keyframes appear-anim {
