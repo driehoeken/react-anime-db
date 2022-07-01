@@ -71,3 +71,10 @@ export const secsToHoursAndMins = (time) => {
 
     return outcome;
 };
+export const setEpAiringMessage = (episode, leftTime) => {
+    if (leftTime !== 0) {
+        return `${episode} episode airing in ${leftTime}`;
+    } else {
+        return `${episode} episode airing in less than hour`;
+    }
+};

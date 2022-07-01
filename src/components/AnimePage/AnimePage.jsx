@@ -7,6 +7,8 @@ import {
     formatAnimeFormat,
     formatAnimeStatus,
     minsToHoursAndMins,
+    secsToHoursAndMins,
+    setEpAiringMessage,
 } from "../../misc";
 
 const AnimePage = () => {
@@ -89,6 +91,8 @@ const AnimePage = () => {
                   	isAdult
                   	nextAiringEpisode {
                   	  id
+                      episode
+                      timeUntilAiring
                   	}
                   	externalLinks {
                   	  id
@@ -181,6 +185,10 @@ const AnimePage = () => {
                 value: formatAnimeFormat(animeData.format),
             },
             {
+                info: "Status: ",
+                value: formatAnimeStatus(animeData.status),
+            },
+            {
                 info: "Romaji: ",
                 value: animeData.title.romaji,
             },
@@ -228,27 +236,36 @@ const AnimePage = () => {
                     : null,
             },
         ];
-
-        const renderValue = (value) => {
-            if (!Array.isArray(value)) {
-                return value;
-            } else {
-                let result = "";
-                value.forEach((val) => {
-                    result += `${val}, `;
-                });
-                result = result.slice(0, -2);
-                return result;
-            }
-        };
-
+        if (animeData.nextAiringEpisode) {
+            const episode = animeData.nextAiringEpisode.episode;
+            const lefTime = secsToHoursAndMins(animeData.nextAiringEpisode.timeUntilAiring);
+            result.unshift({
+                info: "Airing ",
+                value:
+                    lefTime !== 0
+                        ? `${episode} episode in ${lefTime}`
+                        : `${episode} episode in less than hour!`,
+            });
+        }
         const renderInside = () => {
+            const renderValue = (value) => {
+                if (!Array.isArray(value)) {
+                    return value;
+                } else {
+                    let result = "";
+                    value.forEach((val) => {
+                        result += `${val}, `;
+                    });
+                    result = result.slice(0, -2);
+                    return result;
+                }
+            };
             return result.map((data, index) => {
-                if (data.value) {
+                if (data.value && animeData !== undefined) {
                     return (
-                        <div key={index}>
-                            <span>{data.info}</span>
-                            <span>{renderValue(data.value)}</span>
+                        <div className="anime-info" key={index}>
+                            <span className="anime-info-type">{data.info}</span>
+                            <span className="anime-info-value">{renderValue(data.value)}</span>
                         </div>
                     );
                 }

@@ -1,7 +1,12 @@
 import React from "react";
 import "./AnimeCard.css";
 import { Link } from "react-router-dom";
-import { formatAnimeFormat, minsToHoursAndMins, secsToHoursAndMins } from "../../misc";
+import {
+    formatAnimeFormat,
+    minsToHoursAndMins,
+    secsToHoursAndMins,
+    setEpAiringMessage,
+} from "../../misc";
 
 //setting date on hover
 const setDate = (animeData) => {
@@ -31,7 +36,7 @@ const setDate = (animeData) => {
     }
     //it will show the most accurate time we know the anime will be released
     else if (status === "NOT_YET_RELEASED") {
-        if (nextEp !== null) {
+        if (nextEp) {
             return setEpAiringMessage(
                 animeData.nextAiringEpisode.episode,
                 secsToHoursAndMins(animeData.nextAiringEpisode.timeUntilAiring)
@@ -52,13 +57,6 @@ const setDate = (animeData) => {
             return `${startYear}`;
         } else {
             return `Cancelled`;
-        }
-    }
-    function setEpAiringMessage(episode, leftTime) {
-        if (leftTime !== 0) {
-            return `${episode} episode airing in ${leftTime}`;
-        } else {
-            return `${episode} episode airing in less than hour`;
         }
     }
 };
