@@ -6,7 +6,7 @@ import {
     minsToHoursAndMins,
     secsToHoursAndMins,
     setEpAiringMessage,
-} from "../../misc";
+} from "../../../misc";
 
 //setting date on hover
 const setDate = (animeData) => {

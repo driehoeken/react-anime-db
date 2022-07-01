@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AnimeCard from "../AnimeCard/AnimeCard";
+import AnimeCard from "./AnimeCard/AnimeCard";
 import "./AnimeList.css";
 
 const AnimeList = (props) => {
