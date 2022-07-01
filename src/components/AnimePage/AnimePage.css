@@ -66,3 +66,27 @@
 .anime-info-type {
     font-weight: bold;
 }
+.anime-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.anime-tag {
+    background-color: #2c2c2c;
+    padding: 4px 6px 4px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.anime-tag:hover {
+    background-color: #3d3d3d;
+}
+.anime-tag-toggle {
+    cursor: pointer;
+    margin-top: 10px;
+}
+.anime-tag-toggle:hover {
+    color: #e4e4e4;
+}
+.tag-spoiler {
+    color: #ffa4a4;
+}

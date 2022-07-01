@@ -308,7 +308,9 @@ const AnimePage = () => {
             ) {
                 return (
                     <div className="anime-tag" key={index}>
-                        {tag.name}
+                        <span
+                            className={tag.isMediaSpoiler ? "tag-spoiler" : ""}
+                        >{`${tag.name} ${tag.rank}%`}</span>
                     </div>
                 );
             }
@@ -324,10 +326,11 @@ const AnimePage = () => {
         });
 
         const renderTagToggle = (howManyTags, name, showTags, func) => {
-            if (howManyTags > 0 && !showTags) {
+            if (howManyTags > 0) {
                 return (
-                    <div onClick={func}>
-                        Show {howManyTags !== 1 ? `${howManyTags} ${name} tags` : `${name} tag`}
+                    <div className="anime-tag-toggle" onClick={func}>
+                        {showTags ? "Hide" : "Show"}{" "}
+                        {howManyTags !== 1 ? `${howManyTags} ${name} tags` : `${name} tag`}
                     </div>
                 );
             }
@@ -337,10 +340,12 @@ const AnimePage = () => {
             return (
                 <div>
                     {renderTagToggle(spoilerTags, "spoiler", showSpoilerTags, () => {
-                        setShowSpoilerTags(true);
+                        if (showSpoilerTags) setShowSpoilerTags(false);
+                        else setShowSpoilerTags(true);
                     })}
                     {renderTagToggle(adultTags, "adult", showAdultTags, () => {
-                        setShowAdultTags(true);
+                        if (showAdultTags) setShowAdultTags(false);
+                        else setShowAdultTags(true);
                     })}
                 </div>
             );
@@ -371,8 +376,11 @@ const AnimePage = () => {
                             </div>
                             <p className="anime-main-desc">{parse(animeData.description)}</p>
                             <div className="anime-trailer">{renderTrailer()}</div>
-                            <div className="anime-tags">
-                                {renderTags(showSpoilerTags, showAdultTags)}
+                            <div className="anime-tags-wrapper">
+                                <h2>Tags</h2>
+                                <div className="anime-tags">
+                                    {renderTags(showSpoilerTags, showAdultTags)}
+                                </div>
                             </div>
                             {renderTagsToggle()}
                         </div>
