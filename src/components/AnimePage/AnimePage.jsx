@@ -59,6 +59,7 @@ const AnimePage = () => {
                   	  name
                   	  isAdult
                   	  isMediaSpoiler
+                      isGeneralSpoiler
                   	  rank
                   	  category
                   	}
@@ -287,15 +288,30 @@ const AnimePage = () => {
                         height="315"
                         src={`https://www.youtube.com/embed/${id}`}
                         title="YouTube video player"
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
+                        allowFullScreen
                     ></iframe>
                 );
             }
         }
     };
 
+    const renderTags = (showSpoilers, showAdults) => {
+        return animeData.tags.map((tag, index) => {
+            if (
+                ((showSpoilers === false && tag.isMediaSpoiler === false) || showSpoilers) &&
+                ((showSpoilers === false && tag.isGeneralSpoiler === false) || showSpoilers) &&
+                ((showAdults === false && tag.isAdult === false) || showAdults)
+            ) {
+                return (
+                    <div className="anime-tag" key={index}>
+                        {tag.name}
+                    </div>
+                );
+            }
+        });
+    };
     const renderAnimePage = () => {
         if (!loading) {
             return (
@@ -320,6 +336,7 @@ const AnimePage = () => {
                             </div>
                             <p className="anime-main-desc">{parse(animeData.description)}</p>
                             <div className="anime-trailer">{renderTrailer()}</div>
+                            <div className="anime-tags">{renderTags(false, false)}</div>
                         </div>
                     </div>
                 </React.Fragment>
