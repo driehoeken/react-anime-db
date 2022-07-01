@@ -14,6 +14,8 @@ import {
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showSpoilerTags, setShowSpoilerTags] = useState(false);
+    const [showAdultTags, setShowAdultTags] = useState(false);
     const { id } = useParams();
 
     const updateAnimeData = async () => {
@@ -312,6 +314,39 @@ const AnimePage = () => {
             }
         });
     };
+
+    const renderTagsToggle = () => {
+        let spoilerTags = 0;
+        let adultTags = 0;
+        animeData.tags.forEach((tag) => {
+            if (tag.isAdult) adultTags += 1;
+            if (tag.isMediaSpoiler || tag.isGeneralSpoiler) spoilerTags += 1;
+        });
+
+        const renderTagToggle = (howManyTags, name, showTags, func) => {
+            if (howManyTags > 0 && !showTags) {
+                return (
+                    <div onClick={func}>
+                        Show {howManyTags !== 1 ? `${howManyTags} ${name} tags` : `${name} tag`}
+                    </div>
+                );
+            }
+        };
+
+        if (spoilerTags > 0 || adultTags > 0) {
+            return (
+                <div>
+                    {renderTagToggle(spoilerTags, "spoiler", showSpoilerTags, () => {
+                        setShowSpoilerTags(true);
+                    })}
+                    {renderTagToggle(adultTags, "adult", showAdultTags, () => {
+                        setShowAdultTags(true);
+                    })}
+                </div>
+            );
+        }
+    };
+
     const renderAnimePage = () => {
         if (!loading) {
             return (
@@ -336,7 +371,10 @@ const AnimePage = () => {
                             </div>
                             <p className="anime-main-desc">{parse(animeData.description)}</p>
                             <div className="anime-trailer">{renderTrailer()}</div>
-                            <div className="anime-tags">{renderTags(false, false)}</div>
+                            <div className="anime-tags">
+                                {renderTags(showSpoilerTags, showAdultTags)}
+                            </div>
+                            {renderTagsToggle()}
                         </div>
                     </div>
                 </React.Fragment>
