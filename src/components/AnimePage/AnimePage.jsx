@@ -275,6 +275,27 @@ const AnimePage = () => {
         return <div className="anime-information">{renderInside()}</div>;
     };
 
+    const renderTrailer = () => {
+        if (animeData.trailer) {
+            const site = animeData.trailer.site;
+            const id = animeData.trailer.id;
+
+            if (site === "youtube") {
+                return (
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube.com/embed/${id}`}
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                );
+            }
+        }
+    };
+
     const renderAnimePage = () => {
         if (!loading) {
             return (
@@ -282,7 +303,7 @@ const AnimePage = () => {
                     {renderBanner()}
                     <div className="main-section">
                         <div className="anime-main-left">
-                            <img src={animeData.coverImage.large} className="anime-cover" />
+                            <img src={animeData.coverImage.extraLarge} className="anime-cover" />
                             {renderInfos()}
                         </div>
                         <div className="anime-main-right">
@@ -298,6 +319,7 @@ const AnimePage = () => {
                                 })}
                             </div>
                             <p className="anime-main-desc">{parse(animeData.description)}</p>
+                            <div className="anime-trailer">{renderTrailer()}</div>
                         </div>
                     </div>
                 </React.Fragment>
