@@ -310,6 +310,7 @@ const AnimePage = () => {
             if (site === "youtube") {
                 return (
                     <div className="anime-trailer">
+                        <h2>Trailer</h2>
                         <iframe
                             width="560"
                             height="315"
