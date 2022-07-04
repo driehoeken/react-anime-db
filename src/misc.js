@@ -78,3 +78,13 @@ export const setEpAiringMessage = (episode, leftTime) => {
         return `${episode} episode airing in less than hour`;
     }
 };
+export const formatDate = (date) => {
+    const year = date.year;
+    const month = date.month;
+    const day = date.day;
+
+    const d = new Date(`${year}-${month}-${day}`);
+    const options = { day: "numeric", month: "short", year: "numeric" };
+
+    return d.toLocaleDateString("en-gb", options);
+};

@@ -46,6 +46,13 @@ const Home = () => {
                 perPage={5}
                 args={"sort: POPULARITY_DESC"}
             />
+            <h2>Popular All Time Anime Movies</h2>
+            <AnimeList
+                listClass="popular-all-time-movie-list"
+                page={1}
+                perPage={5}
+                args={"sort: POPULARITY_DESC, format: MOVIE"}
+            />
         </React.Fragment>
     );
 };

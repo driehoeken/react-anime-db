@@ -4,6 +4,7 @@ import {
     capitalizeOnlyFirst,
     formatAnimeFormat,
     formatAnimeStatus,
+    formatDate,
     minsToHoursAndMins,
     secsToHoursAndMins,
 } from "../../../misc";
@@ -46,9 +47,11 @@ const Information = (props) => {
         {
             info: "Average Score: ",
             value:
-                (animeData.averageScore / 10) % 1 === 0
-                    ? `${animeData.averageScore / 10}.0`
-                    : animeData.averageScore / 10,
+                animeData.averageScore !== null
+                    ? (animeData.averageScore / 10) % 1 === 0
+                        ? `${animeData.averageScore / 10}.0`
+                        : animeData.averageScore / 10
+                    : null,
         },
         {
             info: "Premiered: ",
@@ -56,15 +59,11 @@ const Information = (props) => {
         },
         {
             info: "Start date: ",
-            value: animeData.startDate.year
-                ? `${animeData.startDate.day}.${animeData.startDate.month}.${animeData.startDate.year}`
-                : null,
+            value: animeData.startDate.year ? formatDate(animeData.startDate) : null,
         },
         {
             info: "End date: ",
-            value: animeData.endDate.year
-                ? `${animeData.endDate.day}.${animeData.endDate.month}.${animeData.endDate.year}`
-                : null,
+            value: animeData.endDate.year ? formatDate(animeData.endDate) : null,
         },
     ];
     if (animeData.nextAiringEpisode) {

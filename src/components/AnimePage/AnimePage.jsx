@@ -7,6 +7,7 @@ import Information from "./Information/Information";
 import Trailer from "./Trailer/Trailer";
 import Tags from "./Tags/Tags";
 import UnderTitle from "./UnderTitle/UnderTitle";
+import Genres from "./Genres/Genres";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -138,45 +139,18 @@ const AnimePage = () => {
         updateAnimeData();
     }, []);
 
-    const renderUnderTitle = () => {};
-
-    const renderTagsToggle = () => {
-        let spoilerTags = 0;
-        animeData.tags.forEach((tag) => {
-            if (tag.isMediaSpoiler || tag.isGeneralSpoiler) spoilerTags += 1;
-        });
-
-        const renderTagToggle = (howManyTags, name, showTags, func) => {
-            if (howManyTags > 0) {
-                return (
-                    <div className="anime-tag-toggle" onClick={func}>
-                        {showTags ? "Hide" : "Show"}{" "}
-                        {howManyTags !== 1 ? `${howManyTags} ${name} tags` : `${name} tag`}
-                    </div>
-                );
-            }
-        };
-
-        if (spoilerTags > 0) {
-            return (
-                <div>
-                    {renderTagToggle(spoilerTags, "spoiler", showSpoilerTags, () => {
-                        if (showSpoilerTags) setShowSpoilerTags(false);
-                        else setShowSpoilerTags(true);
-                    })}
-                </div>
-            );
-        }
-    };
-
     const renderAnimePage = () => {
         if (!loading) {
             return (
-                <React.Fragment>
+                <>
                     <Banner src={animeData.bannerImage} />
                     <div className="main-section">
                         <div className="anime-main-left">
-                            <img src={animeData.coverImage.extraLarge} className="anime-cover" />
+                            <img
+                                src={animeData.coverImage.extraLarge}
+                                alt={animeData.title.romaji}
+                                className="anime-cover"
+                            />
                             <Information data={animeData} />
                         </div>
                         <div className="anime-main-right">
@@ -191,16 +165,10 @@ const AnimePage = () => {
                                 status={animeData.status}
                                 episodes={animeData.episodes}
                             />
-                            <div className="anime-main-genres">
-                                {animeData.genres.map((genre, index) => {
-                                    return (
-                                        <a className="anime-genre" key={index}>
-                                            {genre}
-                                        </a>
-                                    );
-                                })}
-                            </div>
-                            <p className="anime-main-desc">{parse(animeData.description)}</p>
+                            <Genres genres={animeData.genres} />
+                            <p className="anime-main-desc">
+                                {animeData.description !== null && parse(animeData.description)}
+                            </p>
                             <Trailer trailer={animeData.trailer} />
                             <Tags
                                 tags={animeData.tags}
@@ -209,7 +177,7 @@ const AnimePage = () => {
                             />
                         </div>
                     </div>
-                </React.Fragment>
+                </>
             );
         } else {
             return <p>loading...</p>;
