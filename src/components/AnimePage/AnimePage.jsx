@@ -8,6 +8,7 @@ import Trailer from "./Trailer/Trailer";
 import Tags from "./Tags/Tags";
 import UnderTitle from "./UnderTitle/UnderTitle";
 import Genres from "./Genres/Genres";
+import Related from "./Related/Related";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -62,21 +63,19 @@ const AnimePage = () => {
                   	  rank
                   	  category
                   	}
-                  	relations {
-                  	  edges {
-                  	    id
-                  	    relationType
-                  	  }
-                  	  nodes{
-                  	    id
-                  	    title {
-                  	      romaji
-                  	      english
-                  	      native
-                  	      userPreferred
-                  	    }
-                  	  }
-                  	}
+                  	relations{
+                      nodes{
+                      id
+                      title {
+                        romaji
+                      }
+                      type
+                      }
+                      edges{
+                        id
+                        relationType
+                      }
+                    }
                   	chapters
                   	staff {
                   	  edges {
@@ -170,6 +169,7 @@ const AnimePage = () => {
                                 {animeData.description !== null && parse(animeData.description)}
                             </p>
                             <Trailer trailer={animeData.trailer} />
+                            <Related relations={animeData.relations} />
                             <Tags
                                 tags={animeData.tags}
                                 showSpoilers={showSpoilerTags}
