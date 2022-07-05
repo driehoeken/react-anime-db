@@ -2,8 +2,8 @@ import React from "react";
 
 const RelatedToggle = (props) => {
     const toggleContent = () => {
-        if (props.showAll && props.relationsNumber > 4) {
-            return `Hide ${props.relationsNumber - 4} ${
+        if (props.showAll && props.relationsNumber > 3) {
+            return `Hide ${props.relationsNumber - 3} ${
                 props.relationsNumber - 1 === 1 ? "relation" : "relations"
             }`;
         } else if (!props.showAll && props.relationsNumber > 4) {

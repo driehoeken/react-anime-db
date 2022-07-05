@@ -88,3 +88,11 @@ export const formatDate = (date) => {
 
     return d.toLocaleDateString("en-gb", options);
 };
+export const formatRelationType = (relation) => {
+    let result = relation;
+    result = result.toLowerCase();
+    result = result[0].toUpperCase() + result.slice(1);
+    result = result.replace("_", " ");
+
+    return result;
+};

@@ -1,6 +1,7 @@
 import React from "react";
 import RelatedToggle from "./RelatedToggle";
 import "./Related.css";
+import RelatedCard from "./RelatedCard";
 
 const Related = (props) => {
     if (props.relations !== null && props.relations?.nodes?.length > 0) {
@@ -10,21 +11,25 @@ const Related = (props) => {
             const relations = props.relations.edges;
             let animesToShow = animes;
             if (!props.showAll) {
-                animesToShow = animes.slice(0, 4);
+                animesToShow = animes.slice(0, 3);
             }
             //console.log(animesToShow);
             return (
-                <div className="anime-related">
+                <div className="anime-related-wrapper">
                     <h2>Related</h2>
-                    {animesToShow.map((anime, index) => {
-                        if (anime.type === "ANIME") {
-                            return (
-                                <div className="anime-related-card" key={anime.id}>
-                                    {anime.title.romaji} {relations[index].relationType}
-                                </div>
-                            );
-                        }
-                    })}
+                    <div className="anime-related">
+                        {animesToShow.map((anime, index) => {
+                            if (anime.type === "ANIME") {
+                                return (
+                                    <RelatedCard
+                                        key={anime.id}
+                                        data={anime}
+                                        relation={relations[index].relationType}
+                                    />
+                                );
+                            }
+                        })}
+                    </div>
                     <RelatedToggle
                         setShowAll={props.setShowAll}
                         showAll={props.showAll}

@@ -66,11 +66,15 @@ const AnimePage = () => {
                   	}
                   	relations{
                       nodes{
-                      id
-                      title {
-                        romaji
-                      }
-                      type
+                        id
+                        title {
+                          romaji
+                        }
+                        type
+                        format
+                        coverImage{
+                          medium
+                        }
                       }
                       edges{
                         id
