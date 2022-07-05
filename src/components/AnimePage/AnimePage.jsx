@@ -14,6 +14,7 @@ const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showSpoilerTags, setShowSpoilerTags] = useState(false);
+    const [showAllRelated, setShowAllRelated] = useState(false);
     const { id } = useParams();
 
     const updateAnimeData = async () => {
@@ -169,7 +170,11 @@ const AnimePage = () => {
                                 {animeData.description !== null && parse(animeData.description)}
                             </p>
                             <Trailer trailer={animeData.trailer} />
-                            <Related relations={animeData.relations} />
+                            <Related
+                                relations={animeData.relations}
+                                showAll={showAllRelated}
+                                setShowAll={setShowAllRelated}
+                            />
                             <Tags
                                 tags={animeData.tags}
                                 showSpoilers={showSpoilerTags}

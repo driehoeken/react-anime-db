@@ -1,0 +1,7 @@
+.anime-related-toggle {
+    cursor: pointer;
+    margin-top: 10px;
+}
+.anime-related-toggle:hover {
+    color: #e4e4e4;
+}
