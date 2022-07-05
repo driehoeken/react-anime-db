@@ -140,9 +140,9 @@ const AnimePage = () => {
     };
 
     useEffect(() => {
+        setLoading(true);
         updateAnimeData();
-    }, []);
-
+    }, [id]);
     const renderAnimePage = () => {
         if (!loading) {
             return (
