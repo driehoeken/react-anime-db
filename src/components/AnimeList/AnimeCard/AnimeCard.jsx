@@ -108,9 +108,9 @@ const AnimeCard = (props) => {
                         {setEpisodes(animeData)}
                     </p>
                     <div className="anime-card-hover-genres">
-                        {animeData.genres.map((genre, index) => {
+                        {animeData.genres.map((genre) => {
                             return (
-                                <span className="anime-card-hover-genre" key={index}>
+                                <span className="anime-card-hover-genre" key={genre}>
                                     {genre}
                                 </span>
                             );

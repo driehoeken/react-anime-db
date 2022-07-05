@@ -75,8 +75,8 @@ const AnimeList = (props) => {
             }
             return outcome;
         } else {
-            return animes.map((anime, index) => {
-                return <AnimeCard key={index} animeData={anime} />;
+            return animes.map((anime) => {
+                return <AnimeCard key={anime.id} animeData={anime} />;
             });
         }
     };

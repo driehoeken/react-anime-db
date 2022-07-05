@@ -92,10 +92,10 @@ const Information = (props) => {
     };
     return (
         <div className="anime-information">
-            {data.map((info, index) => {
+            {data.map((info) => {
                 if (info.value && animeData !== undefined) {
                     return (
-                        <div className="anime-info" key={index}>
+                        <div className="anime-info" key={info.info}>
                             <span className="anime-info-type">{info.info}</span>
                             <span className="anime-info-value">{renderValue(info.value)}</span>
                         </div>

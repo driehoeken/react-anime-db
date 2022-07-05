@@ -4,9 +4,9 @@ const Genres = (props) => {
     if (props.genres) {
         return (
             <div className="anime-main-genres">
-                {props.genres.map((genre, index) => {
+                {props.genres.map((genre) => {
                     return (
-                        <a className="anime-genre" key={index}>
+                        <a className="anime-genre" key={genre}>
                             {genre}
                         </a>
                     );
