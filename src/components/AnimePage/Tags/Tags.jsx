@@ -1,7 +1,7 @@
 import React from "react";
 import "./Tags.css";
-import Tag from "./Tag/Tag";
-import TagsToggle from "./TagsToggle/TagsToggle";
+import Tag from "./Tag";
+import TagsToggle from "./TagsToggle";
 
 const Tags = (props) => {
     const showSpoilers = props.showSpoilers;
