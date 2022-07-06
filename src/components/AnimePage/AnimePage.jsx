@@ -9,6 +9,7 @@ import Tags from "./Tags/Tags";
 import UnderTitle from "./UnderTitle/UnderTitle";
 import Genres from "./Genres/Genres";
 import Related from "./Related/Related";
+import Staff from "./Staff/Staff";
 
 const AnimePage = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -81,12 +82,25 @@ const AnimePage = () => {
                         relationType
                       }
                     }
-                  	chapters
-                  	staff {
-                  	  edges {
-                  	    id
-                  	  }
-                  	}
+                    staff{
+                      edges{
+                        id
+                        role
+                      }
+                      nodes{
+                        id
+                        name {
+                          first
+                          middle
+                          last
+                          full
+                          native
+                        }
+                        image {
+                          large
+                        }
+                      }
+                    }
                   	studios {
                   	  edges {
                   	    id
@@ -141,6 +155,8 @@ const AnimePage = () => {
 
     useEffect(() => {
         setLoading(true);
+        setShowSpoilerTags(false);
+        setShowAllRelated(false);
         updateAnimeData();
     }, [id]);
     const renderAnimePage = () => {
@@ -174,16 +190,17 @@ const AnimePage = () => {
                                 {animeData.description !== null && parse(animeData.description)}
                             </p>
                             <Trailer trailer={animeData.trailer} />
-                            <Related
-                                relations={animeData.relations}
-                                showAll={showAllRelated}
-                                setShowAll={setShowAllRelated}
-                            />
                             <Tags
                                 tags={animeData.tags}
                                 showSpoilers={showSpoilerTags}
                                 setShowSpoilerTags={setShowSpoilerTags}
                             />
+                            <Related
+                                relations={animeData.relations}
+                                showAll={showAllRelated}
+                                setShowAll={setShowAllRelated}
+                            />
+                            <Staff staff={animeData.staff.nodes} edges={animeData.staff.edges} />
                         </div>
                     </div>
                 </>
