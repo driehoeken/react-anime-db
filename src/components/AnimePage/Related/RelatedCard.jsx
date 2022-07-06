@@ -1,10 +1,10 @@
 import React from "react";
-import { formatAnimeFormat, formatRelationType } from "../../../misc";
+import { formatAnimeFormat, formatRelationType, makeSlug } from "../../../misc";
 import { Link } from "react-router-dom";
 const RelatedCard = (props) => {
     return (
         <div className="anime-related-card">
-            <Link to={`/anime/${props.data.id}`}>
+            <Link to={`/anime/${props.data.id}/${makeSlug(props.data.title.romaji)}`}>
                 <img
                     className="anime-related-card-cover"
                     src={props.data.coverImage.medium}
@@ -13,7 +13,9 @@ const RelatedCard = (props) => {
             </Link>
             <div className="anime-related-card-info-wrap">
                 <p className="anime-related-card-title">
-                    <Link to={`/anime/${props.data.id}`}>{props.data.title.romaji}</Link>
+                    <Link to={`/anime/${props.data.id}/${makeSlug(props.data.title.romaji)}`}>
+                        {props.data.title.romaji}
+                    </Link>
                 </p>
 
                 <div className="anime-related-card-relation-format-wrap">

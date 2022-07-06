@@ -10,13 +10,14 @@ import UnderTitle from "./UnderTitle/UnderTitle";
 import Genres from "./Genres/Genres";
 import Related from "./Related/Related";
 import Staff from "./Staff/Staff";
+import { makeSlug } from "../../misc";
 
 const AnimePage = () => {
+    const { id, name } = useParams();
     const [animeData, setAnimeData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showSpoilerTags, setShowSpoilerTags] = useState(false);
     const [showAllRelated, setShowAllRelated] = useState(false);
-    const { id } = useParams();
 
     const updateAnimeData = async () => {
         const query = `{
@@ -97,7 +98,7 @@ const AnimePage = () => {
                           native
                         }
                         image {
-                          large
+                          medium
                         }
                       }
                     }
@@ -151,6 +152,9 @@ const AnimePage = () => {
         const outcome = responseJson.data.Media;
         setAnimeData(outcome);
         setLoading(false);
+        if (name !== outcome.title.romaji || name === null) {
+            window.history.replaceState(null, "", `/anime/${id}/${makeSlug(outcome.title.romaji)}`);
+        }
     };
 
     useEffect(() => {

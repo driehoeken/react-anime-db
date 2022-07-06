@@ -6,6 +6,7 @@ import {
     minsToHoursAndMins,
     secsToHoursAndMins,
     setEpAiringMessage,
+    makeSlug,
 } from "../../../misc";
 
 //setting date on hover
@@ -89,7 +90,7 @@ const AnimeCard = (props) => {
     return (
         <div className="anime-card">
             <div className="anime-card-cover-wrapper">
-                <Link to={`/anime/${animeData.id}`}>
+                <Link to={`/anime/${animeData.id}/${makeSlug(animeData.title.romaji)}`}>
                     <img
                         className="anime-card-cover"
                         src={animeData.coverImage.large}
@@ -98,9 +99,11 @@ const AnimeCard = (props) => {
                 </Link>
             </div>
             <p className="anime-card-title">
-                <Link to={`/anime/${animeData.id}`}>{animeData.title.romaji}</Link>
+                <Link to={`/anime/${animeData.id}/${makeSlug(animeData.title.romaji)}`}>
+                    {animeData.title.romaji}
+                </Link>
             </p>
-            <Link to={`/anime/${animeData.id}`}>
+            <Link to={`/anime/${animeData.id}/${makeSlug(animeData.title.romaji)}`}>
                 <div className="anime-card-hover-data">
                     <p className="anime-card-hover-date">{setDate(animeData)}</p>
                     <p className="anime-card-hover-format-episodes">
