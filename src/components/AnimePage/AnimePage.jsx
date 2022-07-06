@@ -4,13 +4,12 @@ import "./AnimePage.css";
 import parse from "html-react-parser";
 import Banner from "./Banner/Banner";
 import Information from "./Information/Information";
-import Trailer from "./Trailer/Trailer";
-import Tags from "./Tags/Tags";
 import UnderTitle from "./UnderTitle/UnderTitle";
 import Genres from "./Genres/Genres";
-import Related from "./Related/Related";
 import Staff from "./Staff/Staff";
 import { makeSlug } from "../../misc";
+import { Route, Routes } from "react-router-dom";
+import AnimeMain from "./AnimeMain";
 
 const AnimePage = () => {
     const { id, name } = useParams();
@@ -152,7 +151,7 @@ const AnimePage = () => {
         const outcome = responseJson.data.Media;
         setAnimeData(outcome);
         setLoading(false);
-        if (name !== outcome.title.romaji || name === null) {
+        if (name !== makeSlug(outcome.title.romaji) || name === null) {
             window.history.replaceState(null, "", `/anime/${id}/${makeSlug(outcome.title.romaji)}`);
         }
     };
@@ -166,7 +165,7 @@ const AnimePage = () => {
     const renderAnimePage = () => {
         if (!loading) {
             return (
-                <>
+                <div className="anime-container">
                     <Banner src={animeData.bannerImage} />
                     <div className="main-section">
                         <div className="anime-main-left">
@@ -193,21 +192,25 @@ const AnimePage = () => {
                             <p className="anime-main-desc">
                                 {animeData.description !== null && parse(animeData.description)}
                             </p>
-                            <Trailer trailer={animeData.trailer} />
-                            <Tags
-                                tags={animeData.tags}
-                                showSpoilers={showSpoilerTags}
-                                setShowSpoilerTags={setShowSpoilerTags}
-                            />
-                            <Related
-                                relations={animeData.relations}
-                                showAll={showAllRelated}
-                                setShowAll={setShowAllRelated}
-                            />
-                            <Staff staff={animeData.staff.nodes} edges={animeData.staff.edges} />
+
+                            <Routes>
+                                <Route
+                                    path=""
+                                    element={
+                                        <AnimeMain
+                                            animeData={animeData}
+                                            showSpoilerTags={showSpoilerTags}
+                                            setShowSpoilerTags={setShowSpoilerTags}
+                                            showAllRelated={showAllRelated}
+                                            setShowAllRelated={setShowAllRelated}
+                                        />
+                                    }
+                                />
+                                <Route path="/staff" element={<Staff />} />
+                            </Routes>
                         </div>
                     </div>
-                </>
+                </div>
             );
         } else {
             return <p>loading...</p>;

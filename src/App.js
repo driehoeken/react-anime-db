@@ -11,7 +11,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/anime/:id" element={<AnimePage />} />
-                    <Route path="/anime/:id/:name" element={<AnimePage />} />
+                    <Route path="/anime/:id/:name/*" element={<AnimePage />} />
                 </Routes>
             </div>
         </Router>
