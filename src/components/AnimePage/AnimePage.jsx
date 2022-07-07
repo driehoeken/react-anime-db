@@ -151,9 +151,6 @@ const AnimePage = () => {
         const outcome = responseJson.data.Media;
         setAnimeData(outcome);
         setLoading(false);
-        if (name !== makeSlug(outcome.title.romaji) || name === null) {
-            window.history.replaceState(null, "", `/anime/${id}/${makeSlug(outcome.title.romaji)}`);
-        }
     };
 
     useEffect(() => {
