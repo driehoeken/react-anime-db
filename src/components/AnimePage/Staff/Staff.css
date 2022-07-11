@@ -31,3 +31,12 @@
     position: absolute;
     bottom: 5px;
 }
+.anime-staff-toggle,
+.anime-staff-toggle:link,
+.anime-staff-toggle:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+.anime-staff-toggle:hover {
+    color: #e4e4e4;
+}
