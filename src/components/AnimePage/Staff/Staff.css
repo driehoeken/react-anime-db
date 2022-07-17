@@ -3,7 +3,8 @@
     flex-wrap: wrap;
     gap: 20px;
 }
-.anime-staff-card {
+.anime-staff-card,
+.anime-staff-card-loading {
     width: 365px;
     height: 150px;
     background-color: #2c2c2c;
