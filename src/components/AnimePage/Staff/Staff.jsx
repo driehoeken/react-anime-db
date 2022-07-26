@@ -5,30 +5,18 @@ import "./Staff.css";
 import StaffCard from "./StaffCard.jsx";
 const Staff = () => {
     const [staffs, setStaffs] = useState([]);
-    const [currPage, setCurrPage] = useState(1);
-    const [load, setLoad] = useState(0);
+    const [loading, setLoading] = useState(true);
     const { id } = useParams();
     //const staffs = [];
 
-    const loadNewStaff = async () => {
-        console.log("loadStaff");
-        let newStaffs = staffs;
-        for (let i = 0; i < 3; i++) {
-            newStaffs.push({
-                key: staffs.length + i,
-                data: null,
-                role: null,
-                loading: true,
-            });
-        }
-        setStaffs(newStaffs);
+    const updateStaff = async () => {
         const query = `{
             Media(id: ${id}){
             id
             title {
               romaji
             }
-            staff(page: ${currPage}, perPage: 3){
+            staff{
               edges{
                 id
                 role
@@ -67,50 +55,40 @@ const Staff = () => {
         const response = await fetch(url, options);
         const responseJson = await response.json();
 
-        const outcome = responseJson.data.Media;
-        for (let i = 0; i < 3; i++) {
-            newStaffs[currPage * 3 + i] = {
-                key: staffs.length + i,
-                data: outcome.staff.nodes[i],
-                role: outcome.staff.edges[i].role,
-                loading: false,
-            };
-        }
-        console.log(`currPage: ${currPage}`);
-        setCurrPage(currPage + 1);
-        setStaffs(staffs.concat(newStaffs));
-        //console.log(staffs);
+        const outcome = responseJson.data.Media.staff;
+        console.log(outcome);
+        setStaffs(outcome);
+        setLoading(false);
     };
 
-    const checkLoad = () => {
-        const windowHeight = window.innerHeight;
-        const staffsY = document.querySelector(".anime-staff").getBoundingClientRect().bottom;
-        const scrollY = window.scrollY + windowHeight;
-        //console.log(`windowHeight: ${windowHeight} | staffsY: ${staffsY} | scrollY: ${scrollY}`);
-        if (staffsY - scrollY < 300) {
-            setLoad(load + 1);
-        }
-    };
     useEffect(() => {
-        console.log("useEffect");
-        checkLoad();
+        updateStaff();
     }, []);
-    useEffect(() => {
-        console.log("load useEffect");
-        loadNewStaff();
-    }, [load]);
-
-    window.addEventListener("scroll", checkLoad);
-    return (
-        <>
-            <p onClick={loadNewStaff}>Load new staff</p>
-            <div className="anime-staff">
-                {staffs.map((staff) => {
-                    return <StaffCard key={staff.key} role={staff.role} data={staff.data} />;
-                })}
-            </div>
-        </>
-    );
+    if (!loading) {
+        return (
+            <>
+                <h2>Staff</h2>
+                <div className="anime-staff">
+                    {staffs.nodes.map((staff) => {
+                        return (
+                            <StaffCard
+                                key={staffs.nodes.indexOf(staff)}
+                                role={staffs.edges[staffs.nodes.indexOf(staff).role]}
+                                data={staff}
+                            />
+                        );
+                    })}
+                </div>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <h2>Staff</h2>
+                <p>loading...</p>
+            </>
+        );
+    }
 };
 
 export default Staff;
