@@ -73,7 +73,7 @@ const Staff = () => {
                         return (
                             <StaffCard
                                 key={staffs.nodes.indexOf(staff)}
-                                role={staffs.edges[staffs.nodes.indexOf(staff).role]}
+                                role={staffs.edges[staffs.nodes.indexOf(staff)].role}
                                 data={staff}
                             />
                         );
