@@ -1,0 +1,28 @@
+.card {
+    width: 365px;
+    height: 150px;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+}
+.card-img {
+    border-radius: 10px;
+    height: 150px;
+    width: 100px;
+    object-fit: cover;
+}
+.card-info-wrap {
+    padding: 10px;
+}
+.card-top {
+    margin: 0;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+.card-bottom {
+    position: absolute;
+    bottom: 5px;
+}

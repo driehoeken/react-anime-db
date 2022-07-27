@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Staff.css";
-import StaffCard from "./StaffCard.jsx";
+import Card from "../../Card/Card";
 const Staff = () => {
     const [staffs, setStaffs] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -71,10 +71,13 @@ const Staff = () => {
                 <div className="anime-staff">
                     {staffs.nodes.map((staff) => {
                         return (
-                            <StaffCard
+                            <Card
                                 key={staffs.nodes.indexOf(staff)}
-                                role={staffs.edges[staffs.nodes.indexOf(staff)].role}
-                                data={staff}
+                                class={"staff"}
+                                imgSrc={staff.image.medium}
+                                imgAlt={staff.name.full}
+                                top={staff.name.full}
+                                bottom={staffs.edges[staffs.nodes.indexOf(staff)].role}
                             />
                         );
                     })}
